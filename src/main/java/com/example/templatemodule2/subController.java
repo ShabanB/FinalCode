@@ -2,86 +2,53 @@ package com.example.templatemodule2;
 
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-
-
+import com.example.templatemodule2.essential.subject;
 
 
 public class subController implements Initializable {
-    boolean firstEntry = false;
-    @FXML
-    public Label userTypeLabel;
-    @FXML
-    public TextField searchTextField;
+
+    @FXML private TextField searchTextField;
+    @FXML private TextField subjectCodeField;
+    @FXML private TextField subjectNameField;
+    @FXML private Label statusLabel;
+    @FXML private Label userTypeLabel;
+    @FXML private MenuItem adminMenuItem;
+    @FXML private Button addSubjectButton;
+    @FXML private Button editSubjectButton;
+    @FXML private Button deleteSubjectButton;
+
+    // Labels
+    @FXML public Label labelOne;
+    @FXML public Label labelTwo;
+    @FXML public Label labelThree;
+    @FXML public Label labelFour;
+    @FXML public Label labelFive;
+    @FXML public Label labelSix;
+    @FXML public Label labelSeven;
+    @FXML public Label labelEight;
+    @FXML public Label labelNine;
+    @FXML public Label labelTen;
+    @FXML public Label labelEleven;
+    @FXML public Label labelTweleve;
+    @FXML public Label labelThirteen;
+    @FXML public Label labelFourteen;
+
+
+    @FXML public Label[] infoList = new Label[14];
 
     private boolean subjectsInitialized = false;
 
-    @FXML
-    private MenuItem adminMenuItem;
-
-    @FXML private Button addSubjectButton;
-
-    @FXML private Button editSubjectButton;
-
-    @FXML private Button deleteSubjectButton;
-
-    @FXML
-    public Label labelOne;
-    @FXML
-    public Label labelTwo;
-    @FXML
-    public Label labelThree;
-    @FXML
-    public Label labelFour;
-    @FXML
-    public Label labelFive;
-    @FXML
-    public Label labelSix;
-    @FXML
-    public Label labelSeven;
-    @FXML
-    public Label labelEight;
-    @FXML
-    public Label labelNine;
-    @FXML
-    public Label labelTen;
-    @FXML
-    public Label labelEleven;
-    @FXML
-    public Label labelTweleve;
-    @FXML
-    public Label labelThirteen;
-    @FXML
-    public Label labelFourteen;
-
-
-    @FXML
-    public Label[] infoList = new Label[14];
-
-    public subController() {
-
-    }
-
-    @FXML
-    private TextField subjectCodeField;  // For entering subject code
-
-    @FXML
-    private TextField subjectNameField;  // For entering subject name
-
-    @FXML
-    private Label statusLabel;  // For showing success/error messages
-
-    private int subjectCount = 0;  // Track number of subjects
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // array of labels
         infoList[0] = labelOne;
         infoList[1] = labelTwo;
         infoList[2] = labelThree;
@@ -97,206 +64,207 @@ public class subController implements Initializable {
         infoList[12] = labelThirteen;
         infoList[13] = labelFourteen;
 
-        subjectCount = 0;
-
-        for (int i = 0; i < 14; i++)
-        {
-            infoList[i].setText(i + "");
-        }
-
-        // Hide admin buttons by default
+        // Hide Admin Buttons by default
         addSubjectButton.setVisible(false);
         editSubjectButton.setVisible(false);
         deleteSubjectButton.setVisible(false);
         subjectCodeField.setVisible(false);
         subjectNameField.setVisible(false);
 
+        // Placeholder text
+        subjectCodeField.setText("Enter Subject Code");
+        subjectCodeField.setOnMouseClicked(e -> {
+            if (subjectCodeField.getText().equals("Enter Subject Code")) subjectCodeField.clear();
+        });
 
-        // When mouse clicks CodeField, and it says "enter subject code" it clears the text
-    subjectCodeField.setText("Enter Subject Code");
-    subjectCodeField.setOnMouseClicked(event -> {
-        if (subjectCodeField.getText().equals("Enter Subject Code")) {
-            subjectCodeField.clear();
-        }
-    });
+        subjectNameField.setText("Enter Subject Name");
+        subjectNameField.setOnMouseClicked(e -> {
+            if (subjectNameField.getText().equals("Enter Subject Name")) subjectNameField.clear();
+        });
 
-    // When mouse clicks NameField, and it says "enter subject name" it clears the text
-    subjectNameField.setText("Enter Subject Name");
-    subjectNameField.setOnMouseClicked(event -> {
-        if (subjectNameField.getText().equals("Enter Subject Name")) {
-            subjectNameField.clear();
-        }
-    });
-
+        // Hide Admin menu for student users
         if (main.userType == 's') {
-            adminMenuItem.setVisible(false); // Hides Admin option for students
+            adminMenuItem.setVisible(false);
         }
-
     }
 
-
+    // Shows initial subjects. Subjects are added to the list and labels are updated using a loop
     @FXML
-    protected void onSubjectManagmentButton() throws IOException {
-        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
-        main.switchScene(currentStage, "subjectManagment");
-    }
-    @FXML
-    protected void onCourseManagmentButton() throws IOException {
-        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
-        main.switchScene(currentStage, "courseManagment");
-    }
-    @FXML
-    protected void onStudentManagmentButton() throws IOException {
-        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
-        main.switchScene(currentStage, "studentManagment");
-    }
-    @FXML
-    protected void onFacuiltyManagmentButton() throws IOException {
-        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
-        main.switchScene(currentStage, "facuiltyManagment");
-    }
-    @FXML
-    protected void onEventManagmentButton() throws IOException {
-        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
-        main.switchScene(currentStage, "eventManagment");
-    }
-
-    @FXML
-    protected void onFeatureButtonOne()
-    {
-        if(!subjectsInitialized) {
-            labelOne.setText("MATH001-Mathematics");
-            labelTwo.setText("ENG101-English");
-            labelThree.setText("ENGG1420-Programming");
-            labelFour.setText("CS201-Computer Science");
-            labelFive.setText("CHEM200-Chemistry");
-            labelSix.setText("BIO300-Biology");
-            labelSeven.setText("ENGG402-Engineering");
-            labelEight.setText("HIST101-History");
-            labelNine.setText("MUSIC102-Music");
-            labelTen.setText("PSYCHO100-Psychology");
-            labelEleven.setText("PHYS1010-Physics");
-            labelTweleve.setText("ENGG1210-Mechanics");
-            labelThirteen.setText("MATH1210-Calculus Two");
-            labelFourteen.setText("");
-
+    protected void onFeatureButtonOne() {
+        if (!subjectsInitialized) {
+            subject s1 = new subject(); s1.code = "MATH001"; s1.name = "Mathematics"; main.subjectList.add(s1);
+            subject s2 = new subject(); s2.code = "ENG101"; s2.name = "English"; main.subjectList.add(s2);
+            subject s3 = new subject(); s3.code = "ENGG1420"; s3.name = "Programming"; main.subjectList.add(s3);
+            subject s4 = new subject(); s4.code = "CS201"; s4.name = "Computer Science"; main.subjectList.add(s4);
+            subject s5 = new subject(); s5.code = "CHEM200"; s5.name = "Chemistry"; main.subjectList.add(s5);
+            subject s6 = new subject(); s6.code = "BIO300"; s6.name = "Biology"; main.subjectList.add(s6);
+            subject s7 = new subject(); s7.code = "ENGG402"; s7.name = "Engineering"; main.subjectList.add(s7);
+            subject s8 = new subject(); s8.code = "HIST101"; s8.name = "History"; main.subjectList.add(s8);
+            subject s9 = new subject(); s9.code = "MUSIC102"; s9.name = "Music"; main.subjectList.add(s9);
+            subject s10 = new subject(); s10.code = "PSYCHO100"; s10.name = "Psychology"; main.subjectList.add(s10);
+            subject s11 = new subject(); s11.code = "PHYS1010"; s11.name = "Physics"; main.subjectList.add(s11);
+            subject s12 = new subject(); s12.code = "ENGG1210"; s12.name = "Mechanics"; main.subjectList.add(s12);
+            subject s13 = new subject(); s13.code = "MATH1210"; s13.name = "Calculus Two"; main.subjectList.add(s13);
             subjectsInitialized = true;
         }
-
-
-        resetSubjectList();
+        updateLabelsFromSubjectList();
     }
 
+
     @FXML
-protected void onAdminSelected() {
-    addSubjectButton.setVisible(true);
-    editSubjectButton.setVisible(true);
-    deleteSubjectButton.setVisible(true);
-    subjectCodeField.setVisible(true);
-    subjectNameField.setVisible(true);
-    // Subject List stays visible
-        onFeatureButtonOne();
-}
-
-
-    //code to reset subject list when infolist has nothing in it
-    private void resetSubjectList() {
-        for (Label label : infoList) {
-            if (label != null) {
-                label.setVisible(true);  // Show all subjects again
+    protected void onAdminSelected() {
+        addSubjectButton.setVisible(true);
+        editSubjectButton.setVisible(true);
+        deleteSubjectButton.setVisible(true);
+        subjectCodeField.setVisible(true);
+        subjectNameField.setVisible(true);
+        onFeatureButtonOne(); // show subjects too
+    }
+    // method to update the labels with data from subject list
+    private void updateLabelsFromSubjectList() {
+        for (int i = 0; i < infoList.length; i++) { //loop through infolist
+            if (i < main.subjectList.size()) { // if index is within range of subjectlist
+                subject s = main.subjectList.get(i);
+                infoList[i].setText(s.code + " - " + s.name);
+                infoList[i].setVisible(true);
+            } else { //if fewer subjects than labels it clears and hides the labels
+                infoList[i].setText("");
+                infoList[i].setVisible(false);
             }
         }
     }
 
     @FXML
-    protected void onSearchButton()
-    {
-        //prevents case sensitivity and extra spaces issues
-        String searchText = searchTextField.getText().trim().toLowerCase();
-        //search bar empty show all courses
-        if (searchText.isEmpty()) {
-            resetSubjectList();
-            return;
-        }
-        //for loop for looping each label inside infolist
-            for (Label label : infoList) {
-                if (label != null && label.getText().toLowerCase().contains(searchText)) {
-                    label.setVisible(true);  // Show matching subjects
-                } else {
-                    label.setVisible(false); // Hide non-matching subjects
-                }
-            }
+    protected void onAddSubject() {
+        String code = subjectCodeField.getText().trim().toUpperCase();
+        String name = subjectNameField.getText().trim();
 
-    }
-
-    //admin features
-    @FXML protected void onAddSubject() {
-        String newCode = subjectCodeField.getText().trim().toUpperCase();
-        String newName = subjectNameField.getText().trim();
-        if (newCode.isEmpty() || newName.isEmpty()) {
+        if (code.isEmpty() || name.isEmpty()) {
             statusLabel.setText("Please enter both Subject Code and Name");
             return;
-    }
+        }
 
-        for (Label label : infoList) {
-            if (label.getText().contains(newCode)) {
+        for (subject s : main.subjectList) {
+            if (s.code.equalsIgnoreCase(code)) {
                 statusLabel.setText("Subject Code already exists");
                 return;
             }
         }
 
-        // Find an empty label slot to add a new subject
-        for (int i = 0; i < infoList.length; i++) {
-            if (infoList[i] != null && infoList[i].getText().isEmpty()) { // Look for an empty spot
-                infoList[i].setText(newCode + "-" + newName);
-                infoList[i].setVisible(true);
-                statusLabel.setText("Subject Added Successfully");
-                return;
-            }
+        if (main.subjectList.size() >= 14) {
+            statusLabel.setText("No more space for new subjects");
+            return;
         }
 
-        // Fallback text
-        statusLabel.setText("No more space for new subjects");
-}
-    //Edit Subject
-    @FXML protected void onEditSubject() {
+        subject newSubject = new subject();
+        newSubject.code = code;
+        newSubject.name = name;
+        main.subjectList.add(newSubject);
+
+        statusLabel.setText("Subject Added Successfully");
+        updateLabelsFromSubjectList();
+
+        subjectCodeField.clear();
+        subjectNameField.clear();
+    }
+
+    @FXML
+    protected void onEditSubject() {
         String searchText = searchTextField.getText().trim().toLowerCase();
         if (searchText.isEmpty()) {
             statusLabel.setText("Enter a Subject Code to Edit");
             return;
         }
 
-        for (Label label : infoList) {
-            if (label != null && label.getText().toLowerCase().contains(searchText)) {
-                label.setText(subjectCodeField.getText().trim().toUpperCase() + "-" + subjectNameField.getText().trim());
+        for (subject s : main.subjectList) {
+            if (s.code.toLowerCase().contains(searchText)) {
+                s.code = subjectCodeField.getText().trim().toUpperCase();
+                s.name = subjectNameField.getText().trim();
                 statusLabel.setText("Subject Edited Successfully");
-                resetSubjectList(); //reset list after edit
+                updateLabelsFromSubjectList();
                 return;
-
             }
         }
-        //fallback text
+
         statusLabel.setText("Subject Not Found");
+
+        subjectCodeField.clear();
+        subjectNameField.clear();
     }
 
-    //Delete Subject
-    @FXML protected void onDeleteSubject() {
-        String searchCode = subjectCodeField.getText().trim().toUpperCase();
-        if (searchCode.isEmpty()) {
+    @FXML
+    protected void onDeleteSubject() {
+        String code = subjectCodeField.getText().trim().toUpperCase();
+        if (code.isEmpty()) {
             statusLabel.setText("Enter a Subject Code to Delete");
             return;
         }
 
-        for (Label label : infoList) { // loops through labels in list, label not empty, has text, code matches
-        if (label != null && !label.getText().isEmpty() && label.getText().startsWith(searchCode + "-")) {
-            label.setText("");   // Clear the text
-            label.setVisible(false); // Hide the label
-            statusLabel.setText("Subject Deleted Successfully"); //display message
-            return;
+        for (int i = 0; i < main.subjectList.size(); i++) {
+            if (main.subjectList.get(i).code.equalsIgnoreCase(code)) {
+                main.subjectList.remove(i);
+                statusLabel.setText("Subject Deleted Successfully");
+                updateLabelsFromSubjectList();
+                return;
             }
         }
-        //fallback text
+
         statusLabel.setText("Subject Not Found");
+
+        subjectCodeField.clear();
+        subjectNameField.clear();
     }
 
+    @FXML
+    protected void onSearchButton() {
+        String search = searchTextField.getText().trim().toLowerCase();
+        if (search.isEmpty()) {
+            updateLabelsFromSubjectList();
+            return;
+        }
+
+        for (int i = 0; i < infoList.length; i++) {
+            if (i < main.subjectList.size()) {
+                subject s = main.subjectList.get(i);
+                if (s.code.toLowerCase().contains(search) || s.name.toLowerCase().contains(search)) {
+                    infoList[i].setText(s.code + " - " + s.name);
+                    infoList[i].setVisible(true);
+                } else {
+                    infoList[i].setVisible(false);
+                }
+            } else {
+                infoList[i].setVisible(false);
+            }
+        }
+    }
+
+    @FXML
+    protected void onSubjectManagmentButton() throws IOException {
+        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
+        main.switchScene(currentStage, "subjectManagment");
+    }
+
+    @FXML
+    protected void onCourseManagmentButton() throws IOException {
+        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
+        main.switchScene(currentStage, "courseManagment");
+    }
+
+    @FXML
+    protected void onStudentManagmentButton() throws IOException {
+        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
+        main.switchScene(currentStage, "studentManagment");
+    }
+
+    @FXML
+    protected void onFacuiltyManagmentButton() throws IOException {
+        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
+        main.switchScene(currentStage, "facuiltyManagment");
+    }
+
+    @FXML
+    protected void onEventManagmentButton() throws IOException {
+        Stage currentStage = (Stage) userTypeLabel.getScene().getWindow();
+        main.switchScene(currentStage, "eventManagment");
+    }
 }

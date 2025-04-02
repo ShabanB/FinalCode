@@ -7,6 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import com.example.templatemodule2.essential.subject;
+import java.util.List;
+import java.util.ArrayList;
+
 
 
 public class main extends Application {
@@ -14,6 +18,8 @@ public class main extends Application {
     public static facuilty[] facuilties = new facuilty[100];
     public static course[] courses = new course[100];
     public static int facCounter = 0;
+
+    public static List<subject> subjectList = new ArrayList<>();
 
     public static int mainCounter = 0;
     public static void switchScene (Stage stage,  String s) throws IOException {
@@ -32,13 +38,13 @@ public class main extends Application {
 
         //Scene logModuleScene = new Scene(logModule.load());
 
-        if (s == "subjectManagment")
+        if (s.equals("subjectManagment"))
         {
             stage.setTitle("subjectManagment");
             stage.setScene(subManagmentScene);
             stage.show();
         }
-        if (s == "courseManagment")
+        if (s.equals("courseManagment"))
         {
             stage.setTitle("courseManagment");
             stage.setScene(courManagmentScene);
@@ -50,13 +56,13 @@ public class main extends Application {
             stage.setScene(studManagment);
             stage.show();
         }*/
-        if (s == "facuiltyManagment")
+        if (s.equals("facuiltyManagment"))
         {
             stage.setTitle("facuiltyManagment");
             stage.setScene(facManagmentScene);
             stage.show();
         }
-        if (s == "eventManagment")
+        if (s.equals("eventManagment"))
         {
             stage.setTitle("eventManagment");
             stage.setScene(evenManagmentScene);
